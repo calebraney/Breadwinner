@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const logosWrap = document.querySelector(HEADER_LOGOS_WRAP);
     const form = document.querySelector(HEADER_FORM);
 
-    const angles = gsap.utils.toArray(HEADER_ANGLE_WRAP);
+    const angles = gsap.utils.toArray(HEADER_ANGLE);
     const imageWraps = gsap.utils.toArray(HEADER_IMAGE_WRAP);
     const images = gsap.utils.toArray(HEADER_IMAGE);
     const circleTexts = gsap.utils.toArray(HEADER_CIRCLE_TEXT);
@@ -60,16 +60,19 @@ document.addEventListener('DOMContentLoaded', function () {
       },
     });
     tl.set(section, { opacity: 1 });
-    tl.fromTo(
-      angles,
-      {
-        y: '50%',
-      },
-      {
-        y: '0%',
-        stagger: { each: 0.1, from: 'start' },
-      }
-    );
+    //if window is less than 300px scrolled animate the angles
+    if (window.scrollY <= '200') {
+      tl.fromTo(
+        angles,
+        {
+          y: '50%',
+        },
+        {
+          y: '0%',
+          stagger: { each: 0.1, from: 'start' },
+        }
+      );
+    }
     tl.fromTo(
       logosWrap,
       {
@@ -165,8 +168,67 @@ document.addEventListener('DOMContentLoaded', function () {
   const homeHeaderScroll = function () {
     //get elements
     const wrap = document.querySelector(HEADER_WRAP);
-    const angles = gsap.utils.toArray(HEADER_ANGLE);
-    const imageWraps = gsap.utils.toArray(HEADER_IMAGE_WRAP);
+    const angles = gsap.utils.toArray(HEADER_ANGLE_WRAP);
+    const images = gsap.utils.toArray(HEADER_IMAGE);
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: wrap,
+        start: 'center 90%',
+        end: 'bottom top',
+        ease: 'none',
+        scrub: 0.5,
+      },
+      defaults: {
+        duration: 1,
+        ease: 'none',
+      },
+    });
+    tl.fromTo(
+      angles[0],
+      {
+        y: '0%',
+      },
+      {
+        y: '-10%',
+      },
+      '<'
+    );
+    tl.fromTo(
+      angles[1],
+      {
+        y: '0%',
+      },
+      {
+        y: '5%',
+      },
+      '<'
+    );
+    tl.fromTo(
+      angles[2],
+      {
+        y: '0%',
+      },
+      {
+        y: '10%',
+      },
+      '<'
+    );
+    images.forEach((image) => {
+      tl.fromTo(
+        image,
+        {
+          y: '0%',
+          rotateZ: 0,
+        },
+        {
+          rotateZ: gsap.utils.random(-20, 20, 10),
+          y: `${gsap.utils.random(-20, 20, 10)}%`,
+          // stagger: { each: 0.1, from: 'start' },
+        },
+        '<'
+      );
+    });
   };
 
   //////////////////////////////
@@ -185,6 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let { isMobile, isTablet, isDesktop, reduceMotion } = context.conditions;
         // run animation functions
         homeHeaderLoad();
+        homeHeaderScroll();
       }
     );
   };
