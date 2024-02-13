@@ -62,7 +62,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     tl.set(section, { opacity: 1 });
     //if window is less than 300px scrolled animate the angles
-    if (window.scrollY <= '200' && angles.length !== 0) {
+    console.log(window.scrollY <= '10');
+    if (window.scrollY <= '100' && angles.length !== 0) {
       tl.fromTo(
         angles,
         {
