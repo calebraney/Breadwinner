@@ -4,7 +4,7 @@ import { runSplit } from './utilities';
 
 document.addEventListener('DOMContentLoaded', function () {
   // Comment out for production
-  console.log('Local Script Loaded');
+  // console.log('Local Script Loaded');
 
   //register gsap plugins
   gsap.registerPlugin(ScrollTrigger);
@@ -183,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const images = gsap.utils.toArray(HEADER_IMAGE);
 
     if (!wrap || angles.length === 0 || images.length === 0) return;
-    console.log('scroll');
 
     const tl = gsap.timeline({
       defaults: {
@@ -232,9 +231,10 @@ document.addEventListener('DOMContentLoaded', function () {
       const parent = image.parentElement;
       // get a circle text if the item has one.
       const circleText = parent.querySelector(HEADER_CIRCLE_TEXT);
+      //
       //create dynamic move and rotate values
-      const move = gsap.utils.random(-10, 10, 10);
-      const rotateZ = `${gsap.utils.random(-10, 10, 10)}%`;
+      const move = gsap.utils.random([-10, 10]);
+      const rotate = gsap.utils.random([-10, 10]);
       //create tween
       tl.fromTo(
         image,
@@ -243,8 +243,8 @@ document.addEventListener('DOMContentLoaded', function () {
           rotateZ: 0,
         },
         {
-          rotateZ: move,
-          y: rotateZ,
+          y: `${move}%`,
+          rotateZ: rotate,
         },
         0
       );
@@ -257,8 +257,8 @@ document.addEventListener('DOMContentLoaded', function () {
             rotateZ: 0,
           },
           {
-            rotateZ: move,
-            y: rotateZ,
+            y: `${move}%`,
+            rotateZ: rotate * 3,
           },
           0
         );
