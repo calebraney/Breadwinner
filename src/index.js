@@ -145,12 +145,12 @@ document.addEventListener('DOMContentLoaded', function () {
         {
           scale: 0.5,
           opacity: 0,
-          rotateZ: gsap.utils.random(-15, 15, 5),
+          rotateZ: gsap.utils.random([-15, 15]),
         },
         {
           scale: 1,
           opacity: 1,
-          rotateZ: 0,
+          rotateZ: gsap.utils.random([-3, 3]),
           duration: 1,
           stagger: { each: 0.1, from: 'start' },
         },
